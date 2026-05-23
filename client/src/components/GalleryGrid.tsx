@@ -2,23 +2,24 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Camera, X } from "lucide-react";
 import { useLang } from "@/context/LangContext";
+import {
+  cover_image_1,
+  cover_image_2,
+  cover_image_3,
+  cover_image_4,
+  cover_image_5,
+  cover_image_6,
+} from "@/assets/images";
 
 const photos = [
-  { id: 1, album: "pre", h: 320 },
-  { id: 2, album: "engagement", h: 420 },
-  { id: 3, album: "pre", h: 280 },
-  { id: 4, album: "engagement", h: 360 },
-  { id: 5, album: "pre", h: 400 },
-  { id: 6, album: "engagement", h: 300 },
-  { id: 7, album: "pre", h: 340 },
-  { id: 8, album: "engagement", h: 380 },
-];
-
-const gradients = [
-  "linear-gradient(135deg, #5A3319, #E5C290)",
-  "linear-gradient(160deg, #E5C290, #FDF8F2)",
-  "linear-gradient(135deg, #8b5a3c, #E5C290)",
-  "linear-gradient(180deg, #5A3319, #8b5a3c)",
+  { id: 1, album: "pre", src: cover_image_1, h: 320 },
+  { id: 2, album: "engagement", src: cover_image_2, h: 420 },
+  { id: 3, album: "pre", src: cover_image_3, h: 280 },
+  { id: 4, album: "engagement", src: cover_image_4, h: 360 },
+  { id: 5, album: "pre", src: cover_image_5, h: 400 },
+  { id: 6, album: "engagement", src: cover_image_6, h: 300 },
+  { id: 7, album: "pre", src: cover_image_1, h: 340 },
+  { id: 8, album: "engagement", src: cover_image_2, h: 380 },
 ];
 
 export default function GalleryGrid() {
@@ -55,8 +56,13 @@ export default function GalleryGrid() {
             transition={{ duration: 0.5, delay: i * 0.05 }}
             onClick={() => setLightbox(p.id)}
             className="block w-full break-inside-avoid rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow group relative"
-            style={{ height: p.h, background: gradients[p.id % gradients.length] }}
+            style={{ height: p.h }}
           >
+            <img
+              src={p.src}
+              alt=""
+              className="w-full h-full object-cover"
+            />
             <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/20 transition-colors">
               <Camera className="w-8 h-8 text-[#FDF8F2]/80" />
             </div>
@@ -77,9 +83,14 @@ export default function GalleryGrid() {
             <motion.div
               initial={{ scale: 0.9 }} animate={{ scale: 1 }} exit={{ scale: 0.9 }}
               onClick={(e) => e.stopPropagation()}
-              className="w-full max-w-3xl aspect-[4/3] rounded-2xl"
-              style={{ background: gradients[(lightbox ?? 0) % gradients.length] }}
-            />
+              className="w-full max-w-3xl rounded-2xl overflow-hidden"
+            >
+              <img
+                src={photos.find((p) => p.id === lightbox)?.src}
+                alt=""
+                className="w-full h-auto"
+              />
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
