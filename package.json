@@ -1,0 +1,11 @@
+{
+  "name": "joyce-and-derick-wedding",
+  "private": true,
+  "workspaces": ["client", "server"],
+  "scripts": {
+    "dev": "npm run dev -w client",
+    "build": "npm run build -w client",
+    "preview": "npm run preview -w client",
+    "server": "npm run dev -w server"
+  }
+}
