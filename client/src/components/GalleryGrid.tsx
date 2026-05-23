@@ -2,34 +2,36 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, ChevronLeft, ChevronRight, Camera } from 'lucide-react'
 import { useLang } from '../context/LangContext'
+import {
+  cover_image_1,
+  cover_image_2,
+  cover_image_3,
+  cover_image_4,
+  cover_image_5,
+  cover_image_6,
+} from '../assets/images'
 
 type Album = 'all' | 'pre' | 'eng'
 
 interface Photo {
   id: number
   album: 'pre' | 'eng'
-  aspect: 'portrait' | 'landscape' | 'square'
-  color: string
+  src: string
 }
 
-// Placeholder photos with different proportions for masonry feel
+const images = [cover_image_1, cover_image_2, cover_image_3, cover_image_4, cover_image_5, cover_image_6]
+
 const PHOTOS: Photo[] = [
-  { id: 1, album: 'pre', aspect: 'portrait',   color: '#7A5C3A' },
-  { id: 2, album: 'pre', aspect: 'landscape',  color: '#8B6845' },
-  { id: 3, album: 'eng', aspect: 'square',     color: '#6B4A2A' },
-  { id: 4, album: 'eng', aspect: 'portrait',   color: '#9A7A55' },
-  { id: 5, album: 'pre', aspect: 'landscape',  color: '#7D5A38' },
-  { id: 6, album: 'eng', aspect: 'square',     color: '#5A3D22' },
-  { id: 7, album: 'pre', aspect: 'portrait',   color: '#8A6540' },
-  { id: 8, album: 'eng', aspect: 'landscape',  color: '#705035' },
-  { id: 9, album: 'pre', aspect: 'square',     color: '#6A4828' },
+  { id: 1, album: 'pre', src: images[0] },
+  { id: 2, album: 'pre', src: images[1] },
+  { id: 3, album: 'eng', src: images[2] },
+  { id: 4, album: 'eng', src: images[3] },
+  { id: 5, album: 'pre', src: images[4] },
+  { id: 6, album: 'eng', src: images[5] },
+  { id: 7, album: 'pre', src: images[0] },
+  { id: 8, album: 'eng', src: images[1] },
+  { id: 9, album: 'pre', src: images[2] },
 ]
-
-function aspectH(a: Photo['aspect']) {
-  if (a === 'portrait')  return 'h-72'
-  if (a === 'landscape') return 'h-48'
-  return 'h-56'
-}
 
 export default function GalleryGrid({
   onSubmitClick,
@@ -78,8 +80,8 @@ export default function GalleryGrid({
         ))}
       </div>
 
-      {/* Masonry grid */}
-      <div className="columns-2 md:columns-3 gap-3 space-y-3">
+      {/* Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <AnimatePresence>
           {visible.map((photo, i) => (
             <motion.button
@@ -90,13 +92,13 @@ export default function GalleryGrid({
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ delay: i * 0.05 }}
               onClick={() => setLight(photo.id)}
-              className={`w-full break-inside-avoid mb-3 rounded-lg overflow-hidden group relative cursor-pointer ${aspectH(photo.aspect)}`}
-              style={{ backgroundColor: photo.color }}
+              className="w-full h-80 rounded-xl overflow-hidden group relative cursor-pointer"
             >
-              {/* Placeholder interior */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 opacity-40 group-hover:opacity-60 transition-opacity">
-                <Camera size={24} className="text-brand-gold" />
-              </div>
+              <img
+                src={photo.src}
+                alt=""
+                className="w-full h-full object-cover"
+              />
               {/* Hover overlay */}
               <div className="absolute inset-0 bg-brand-brown/0 group-hover:bg-brand-brown/30 transition-all duration-300 flex items-center justify-center">
                 <span className="text-brand-gold opacity-0 group-hover:opacity-100 transition-opacity font-serif text-sm italic">
@@ -135,17 +137,14 @@ export default function GalleryGrid({
               initial={{ scale: 0.9 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0.9 }}
-              className="relative max-w-2xl w-full mx-4"
+              className="relative max-w-2xl w-full mx-4 rounded-xl overflow-hidden"
               onClick={e => e.stopPropagation()}
-              style={{
-                backgroundColor: PHOTOS.find(p => p.id === light)?.color,
-                aspectRatio: '4/3',
-                borderRadius: '12px',
-              }}
             >
-              <div className="absolute inset-0 flex items-center justify-center opacity-30">
-                <Camera size={48} className="text-brand-gold" />
-              </div>
+              <img
+                src={PHOTOS.find(p => p.id === light)?.src}
+                alt=""
+                className="w-full h-auto"
+              />
             </motion.div>
 
             {/* Controls */}
