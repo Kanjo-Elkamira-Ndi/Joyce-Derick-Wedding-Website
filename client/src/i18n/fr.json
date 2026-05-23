@@ -34,13 +34,23 @@
     "gold": "Or Champagne"
   },
   "gallery": {
+    "eyebrow": "Un voyage visuel à travers notre histoire d'amour",
     "title": "Instants",
-    "subtitle": "Aperçus de notre parcours",
-    "tabs": { "pre": "Pré-mariage", "engagement": "Fiançailles" },
-    "submit": "Partager vos photos",
-    "modalTitle": "Partagez un souvenir",
-    "modalDesc": "Téléchargez votre cliché préféré de notre parcours.",
-    "close": "Fermer"
+    "tab": {
+      "all": "Tout",
+      "pre": "Pré-mariage",
+      "eng": "Fiançailles"
+    },
+    "submit": {
+      "desc": "Partagez vos moments préférés de notre parcours.",
+      "btn": "Partager vos photos"
+    },
+    "modal": {
+      "title": "Partagez un souvenir",
+      "desc": "Téléchargez votre cliché préféré de notre parcours.",
+      "btn": "Choisir des photos",
+      "close": "Fermer"
+    }
   },
   "rsvp": {
     "title": "RSVP",

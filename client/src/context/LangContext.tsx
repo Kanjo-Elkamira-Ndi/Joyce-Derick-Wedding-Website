@@ -9,14 +9,36 @@ interface LangCtx {
   lang: Lang;
   setLang: (l: Lang) => void;
   toggle: () => void;
-  t: Dict;
+  t: ((path: string) => string) & Dict;
 }
 
 const Ctx = createContext<LangCtx | null>(null);
 
+function resolve(obj: unknown, path: string): string {
+  return String(path.split(".").reduce((acc: unknown, key: string) => {
+    if (acc && typeof acc === "object" && key in acc) return (acc as Record<string, unknown>)[key];
+    return path;
+  }, obj));
+}
+
+function createT(dict: unknown): ((path: string) => string) & Dict {
+  const fn = (path: string) => resolve(dict, path);
+  return new Proxy(fn, {
+    get(_target, prop) {
+      if (prop === "then") return undefined;
+      const val = (dict as Record<string, unknown>)[prop as string];
+      if (Array.isArray(val)) return val;
+      if (val !== null && typeof val === "object") return createT(val);
+      return val;
+    },
+  }) as unknown as (path: string) & Dict;
+}
+
 export function LangProvider({ children }: { children: ReactNode }) {
   const [lang, setLang] = useState<Lang>("en");
-  const t = lang === "en" ? en : (fr as Dict);
+  const dict = lang === "en" ? en : (fr as Dict);
+  const t = createT(dict);
+
   return (
     <Ctx.Provider value={{ lang, setLang, toggle: () => setLang(lang === "en" ? "fr" : "en"), t }}>
       {children}
