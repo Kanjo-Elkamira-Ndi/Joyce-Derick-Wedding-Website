@@ -4,6 +4,7 @@
   "workspaces": ["client", "server"],
   "scripts": {
     "dev": "npm run dev -w client",
+    "dev:all": "npm run dev -w client & npm run dev -w server",
     "build": "npm run build -w client",
     "preview": "npm run preview -w client",
     "server": "npm run dev -w server"

@@ -1,7 +1,8 @@
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useEffect } from "react";
 import { motion } from "framer-motion";
 import GuestbookCard from "@/components/GuestbookCard";
 import { useLang } from "@/context/LangContext";
+import { guestbook as guestbookApi } from "@/lib/api";
 
 interface Entry { name: string; message: string; date: string }
 
@@ -10,19 +11,36 @@ export default function Guestbook() {
   const [entries, setEntries] = useState<Entry[]>([]);
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
+  const [submitted, setSubmitted] = useState(false);
 
-  const all = [
-    ...entries,
-    ...t.guestbook.seed,
-  ];
+  useEffect(() => {
+    guestbookApi.list().then((res) => {
+      setEntries(
+        res.data.map((e: any) => ({
+          name: e.guest_name,
+          message: e.message,
+          date: new Date(e.created_at).toLocaleDateString("en-US", {
+            month: "short", day: "numeric", year: "numeric",
+          }),
+        }))
+      )
+    }).catch(() => {})
+  }, []);
 
-  const onSubmit = (e: FormEvent) => {
+  const all = submitted
+    ? entries
+    : [...entries, ...t.guestbook.seed];
+
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !message.trim()) return;
-    const today = new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-    setEntries([{ name, message, date: today }, ...entries]);
-    setName(""); setMessage("");
-    console.log("Guestbook entry:", { name, message });
+    try {
+      await guestbookApi.submit(name.trim(), message.trim());
+      setSubmitted(true);
+      setName(""); setMessage("");
+    } catch {
+      alert("Failed to submit. Please try again.");
+    }
   };
 
   return (
