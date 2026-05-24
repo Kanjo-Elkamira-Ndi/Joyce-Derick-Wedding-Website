@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLang } from "@/context/LangContext";
 
-const TARGET = new Date("2025-12-14T11:00:00+01:00").getTime();
+const TARGET = new Date("2026-07-04T11:00:00+01:00").getTime();
 
 function diff() {
   const d = TARGET - Date.now();
