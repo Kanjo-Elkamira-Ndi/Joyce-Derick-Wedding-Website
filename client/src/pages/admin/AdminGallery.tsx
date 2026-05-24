@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Upload, Trash2 } from "lucide-react"
 import { media as mediaApi } from "@/lib/api"
 
@@ -13,6 +13,8 @@ interface MediaItem {
 export default function AdminGallery() {
   const [items, setItems] = useState<MediaItem[]>([])
   const [loading, setLoading] = useState(true)
+  const [uploading, setUploading] = useState(false)
+  const fileRef = useRef<HTMLInputElement>(null)
 
   const fetchItems = () => {
     setLoading(true)
@@ -34,6 +36,23 @@ export default function AdminGallery() {
     }
   }
 
+  const handleFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setUploading(true)
+    try {
+      await mediaApi.adminUpload(file, album)
+      fetchItems()
+    } catch {
+      alert("Upload failed")
+    } finally {
+      setUploading(false)
+      if (fileRef.current) fileRef.current.value = ""
+    }
+  }
+
+  const [album, setAlbum] = useState("pre-wedding")
+
   return (
     <div>
       <div className="flex items-center justify-between mb-8">
@@ -41,10 +60,33 @@ export default function AdminGallery() {
           <h2 className="font-serif text-3xl text-[#5A3319] mb-1">Gallery</h2>
           <p className="text-[#5A3319]/60 text-sm">Manage photo albums</p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 bg-[#5A3319] text-[#E5C290] rounded-lg text-sm hover:bg-[#3d2010] transition-colors">
-          <Upload size={16} />
-          Upload
-        </button>
+        <div className="flex items-center gap-3">
+          <select
+            value={album}
+            onChange={(e) => setAlbum(e.target.value)}
+            className="text-sm border border-[#E5C290] rounded-lg px-3 py-2 bg-white text-[#5A3319]"
+          >
+            <option value="pre-wedding">Pre-wedding</option>
+            <option value="engagement">Engagement</option>
+            <option value="ceremony">Ceremony</option>
+            <option value="reception">Reception</option>
+          </select>
+          <input
+            ref={fileRef}
+            type="file"
+            accept="image/*"
+            onChange={handleFile}
+            className="hidden"
+          />
+          <button
+            onClick={() => fileRef.current?.click()}
+            disabled={uploading}
+            className="flex items-center gap-2 px-4 py-2 bg-[#5A3319] text-[#E5C290] rounded-lg text-sm hover:bg-[#3d2010] transition-colors disabled:opacity-50"
+          >
+            <Upload size={16} />
+            {uploading ? "Uploading..." : "Upload"}
+          </button>
+        </div>
       </div>
 
       {loading ? (

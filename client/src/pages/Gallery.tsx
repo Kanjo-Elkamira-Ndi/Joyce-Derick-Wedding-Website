@@ -1,13 +1,32 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, Upload } from 'lucide-react'
+import { X, Upload, CheckCircle } from 'lucide-react'
 import SectionWrapper from '../components/SectionWrapper'
 import GalleryGrid from '../components/GalleryGrid'
 import { useLang } from '../context/LangContext'
+import { media as mediaApi } from '@/lib/api'
 
 export default function Gallery() {
   const { t } = useLang()
   const [modal, setModal] = useState(false)
+  const [uploading, setUploading] = useState(false)
+  const [done, setDone] = useState(false)
+  const fileRef = useRef<HTMLInputElement>(null)
+
+  const handleFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setUploading(true)
+    try {
+      await mediaApi.guestSubmit(file)
+      setDone(true)
+    } catch {
+      alert("Upload failed. Please try again.")
+    } finally {
+      setUploading(false)
+      if (fileRef.current) fileRef.current.value = ""
+    }
+  }
 
   return (
     <SectionWrapper id="gallery" className="section-pad bg-brand-cream-dark">
@@ -22,7 +41,7 @@ export default function Gallery() {
           <div className="gold-rule w-32 mx-auto" />
         </div>
 
-        <GalleryGrid onSubmitClick={() => setModal(true)} />
+        <GalleryGrid onSubmitClick={() => { setModal(true); setDone(false) }} />
       </div>
 
       {/* Submit modal */}
@@ -50,28 +69,60 @@ export default function Gallery() {
                 <X size={20} />
               </button>
 
-              <h3 className="font-serif text-2xl font-light text-brand-brown mb-2">
-                {t('gallery.modal.title')}
-              </h3>
-              <div className="gold-rule w-16 mb-4" />
-              <p className="font-sans text-sm text-brand-brown/60 mb-8 leading-relaxed">
-                {t('gallery.modal.desc')}
-              </p>
+              {done ? (
+                <>
+                  <div className="flex flex-col items-center py-6">
+                    <CheckCircle size={48} className="text-green-600 mb-4" />
+                    <h3 className="font-serif text-2xl font-light text-brand-brown mb-2">
+                      Photo submitted!
+                    </h3>
+                    <p className="font-sans text-sm text-brand-brown/60 text-center leading-relaxed">
+                      Your photo will appear after review. Thank you!
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => setModal(false)}
+                    className="mt-4 w-full py-3 bg-brand-brown text-brand-gold font-sans font-medium tracking-widest uppercase text-sm rounded-full hover:bg-brand-brown-dark transition-colors duration-300"
+                  >
+                    Close
+                  </button>
+                </>
+              ) : (
+                <>
+                  <h3 className="font-serif text-2xl font-light text-brand-brown mb-2">
+                    {t('gallery.modal.title')}
+                  </h3>
+                  <div className="gold-rule w-16 mb-4" />
+                  <p className="font-sans text-sm text-brand-brown/60 mb-8 leading-relaxed">
+                    {t('gallery.modal.desc')}
+                  </p>
 
-              {/* Upload area */}
-              <div className="border-2 border-dashed border-brand-gold/40 rounded-xl p-10 flex flex-col items-center gap-3 cursor-pointer hover:border-brand-gold hover:bg-brand-gold/5 transition-all duration-300">
-                <Upload size={28} className="text-brand-gold-deep" />
-                <p className="font-sans text-sm text-brand-brown/60 text-center">
-                  {t('gallery.modal.btn')}
-                </p>
-              </div>
+                  {/* Upload area */}
+                  <input
+                    ref={fileRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFile}
+                    className="hidden"
+                  />
+                  <div
+                    onClick={() => fileRef.current?.click()}
+                    className="border-2 border-dashed border-brand-gold/40 rounded-xl p-10 flex flex-col items-center gap-3 cursor-pointer hover:border-brand-gold hover:bg-brand-gold/5 transition-all duration-300"
+                  >
+                    <Upload size={28} className="text-brand-gold-deep" />
+                    <p className="font-sans text-sm text-brand-brown/60 text-center">
+                      {uploading ? "Uploading..." : t('gallery.modal.btn')}
+                    </p>
+                  </div>
 
-              <button
-                onClick={() => setModal(false)}
-                className="mt-6 w-full py-3 bg-brand-brown text-brand-gold font-sans font-medium tracking-widest uppercase text-sm rounded-full hover:bg-brand-brown-dark transition-colors duration-300"
-              >
-                {t('gallery.modal.close')}
-              </button>
+                  <button
+                    onClick={() => setModal(false)}
+                    className="mt-6 w-full py-3 bg-brand-brown text-brand-gold font-sans font-medium tracking-widest uppercase text-sm rounded-full hover:bg-brand-brown-dark transition-colors duration-300"
+                  >
+                    {t('gallery.modal.close')}
+                  </button>
+                </>
+              )}
             </motion.div>
           </motion.div>
         )}

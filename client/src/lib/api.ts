@@ -77,6 +77,23 @@ export const guestbook = {
     request<{ message: string }>(`/guestbook/admin/${id}`, { method: "DELETE" }),
 }
 
+// ── File upload helpers (multipart, no JSON Content-Type) ──
+async function uploadFile<T>(path: string, formData: FormData): Promise<T> {
+  const token = sessionStorage.getItem("admin_token")
+  const res = await fetch(`${BASE}${path}`, {
+    method: "POST",
+    headers: {
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+    body: formData,
+  })
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({ error: res.statusText }))
+    throw new Error(body.error || "Upload failed")
+  }
+  return res.json()
+}
+
 // ── Media / Gallery ───────────────────────────────────────
 export const media = {
   list: (album?: string) =>
@@ -85,4 +102,17 @@ export const media = {
     request<{ data: any[]; count: number }>("/media/admin"),
   delete: (id: string) =>
     request<{ message: string }>(`/media/admin/${id}`, { method: "DELETE" }),
+  adminUpload: (file: File, album: string, caption?: string) => {
+    const fd = new FormData()
+    fd.append("file", file)
+    fd.append("album", album)
+    if (caption) fd.append("caption", caption)
+    return uploadFile<{ message: string; data: any }>("/media/admin/upload/image", fd)
+  },
+  guestSubmit: (file: File, name?: string) => {
+    const fd = new FormData()
+    fd.append("file", file)
+    if (name) fd.append("name", name)
+    return uploadFile<{ message: string; data: any }>("/media/guest-submit", fd)
+  },
 }
