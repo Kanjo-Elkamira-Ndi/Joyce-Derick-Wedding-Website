@@ -1,26 +1,28 @@
-import { Router } from "express"
-import { verifyJWT } from "../middleware/auth.middleware"
+import { Router } from 'express'
+import {
+  getApprovedMessages,
+  submitMessage,
+  getAllMessages,
+  approveMessage,
+  deleteMessage,
+} from '../controllers/guestbook.controller'
+import { requireAuth } from '../middleware/auth'
 
 const router = Router()
 
-router.get("/", (_req, res) => {
-  // TODO: fetch approved entries from DB
-  res.json({ entries: [] })
-})
+// GET  /api/guestbook         — public: approved messages shown on site
+router.get('/', getApprovedMessages)
 
-router.post("/", (req, res) => {
-  // TODO: save entry (pending approval) to DB
-  res.status(201).json({ message: "Entry submitted", ...req.body })
-})
+// POST /api/guestbook         — public: guest submits a wish
+router.post('/', submitMessage)
 
-router.patch("/:id/approve", verifyJWT, (req, res) => {
-  // TODO: update entry status in DB
-  res.json({ message: `Entry ${req.params.id} approved` })
-})
+// GET    /api/admin/guestbook           — protected: all messages + pending
+router.get('/admin', requireAuth, getAllMessages)
 
-router.delete("/:id", verifyJWT, (req, res) => {
-  // TODO: delete from DB
-  res.json({ message: `Entry ${req.params.id} deleted` })
-})
+// PATCH  /api/admin/guestbook/:id/approve — protected: approve a message
+router.patch('/admin/:id/approve', requireAuth, approveMessage)
+
+// DELETE /api/admin/guestbook/:id         — protected: delete a message
+router.delete('/admin/:id', requireAuth, deleteMessage)
 
 export default router

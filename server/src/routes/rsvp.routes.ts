@@ -1,22 +1,24 @@
-import { Router } from "express"
-import { verifyJWT } from "../middleware/auth.middleware"
+import { Router } from 'express'
+import {
+  createRsvp,
+  getRsvps,
+  exportRsvpsCsv,
+  deleteRsvp,
+} from '../controllers/rsvp.controller'
+import { requireAuth } from '../middleware/auth'
 
 const router = Router()
 
-router.get("/", verifyJWT, (_req, res) => {
-  // TODO: fetch from DB
-  res.json({ guests: [] })
-})
+// POST /api/rsvp         — public: guest submits RSVP
+router.post('/', createRsvp)
 
-router.post("/", (req, res) => {
-  // TODO: save RSVP to DB
-  res.status(201).json({ message: "RSVP received", ...req.body })
-})
+// GET  /api/admin/rsvps          — protected: full list
+router.get('/admin', requireAuth, getRsvps)
 
-router.get("/export", verifyJWT, (_req, res) => {
-  // TODO: generate CSV from DB
-  res.setHeader("Content-Type", "text/csv")
-  res.send("name,email,attendance,meal_preference\n")
-})
+// GET  /api/admin/rsvps/export   — protected: CSV download
+router.get('/admin/export', requireAuth, exportRsvpsCsv)
+
+// DELETE /api/admin/rsvps/:id    — protected
+router.delete('/admin/:id', requireAuth, deleteRsvp)
 
 export default router
