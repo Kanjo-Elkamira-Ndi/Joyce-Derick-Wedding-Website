@@ -157,3 +157,51 @@
     scroll-behavior: smooth;
   }
 }
+
+.eyebrow {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: var(--color-brand-gold);
+}
+
+.gold-rule {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-brand-gold), transparent);
+}
+
+.section-pad {
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+}
+
+@media (min-width: 768px) {
+  .section-pad {
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+  }
+}
+
+.bg-brand-cream-dark {
+  background-color: #F5ECD8;
+}
+
+.bg-brand-brown-dark {
+  background-color: #3d2010;
+}
+
+.text-brand-gold-deep {
+  color: #c9a56e;
+}
+
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}

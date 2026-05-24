@@ -34,13 +34,23 @@
     "gold": "Champagne Gold"
   },
   "gallery": {
+    "eyebrow": "A visual journey through our love story",
     "title": "Moments",
-    "subtitle": "Glimpses of our journey",
-    "tabs": { "pre": "Pre-wedding", "engagement": "Engagement" },
-    "submit": "Submit your photos",
-    "modalTitle": "Share a memory",
-    "modalDesc": "Upload your favourite snapshot from our journey.",
-    "close": "Close"
+    "tab": {
+      "all": "All",
+      "pre": "Pre-wedding",
+      "eng": "Engagement"
+    },
+    "submit": {
+      "desc": "Share your favourite moments from our journey.",
+      "btn": "Submit your photos"
+    },
+    "modal": {
+      "title": "Share a memory",
+      "desc": "Upload your favourite snapshot from our journey.",
+      "btn": "Choose photos",
+      "close": "Close"
+    }
   },
   "rsvp": {
     "title": "RSVP",

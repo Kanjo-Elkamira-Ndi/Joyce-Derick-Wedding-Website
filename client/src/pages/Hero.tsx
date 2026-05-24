@@ -3,14 +3,16 @@ import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import Countdown from "@/components/Countdown";
 import { useLang } from "@/context/LangContext";
+import {
+  carousel_1,
+  carousel_2,
+  carousel_3,
+  carousel_4,
+  carousel_5,
+  carousel_6,
+} from "@/assets/images";
 
-const slides = [
-  "radial-gradient(circle at 30% 40%, #8b5a3c 0%, #5A3319 60%, #2a1810 100%)",
-  "linear-gradient(135deg, #5A3319 0%, #E5C290 100%)",
-  "radial-gradient(circle at 70% 60%, #E5C290 0%, #8b5a3c 50%, #5A3319 100%)",
-  "linear-gradient(160deg, #2a1810 0%, #5A3319 50%, #E5C290 100%)",
-  "radial-gradient(ellipse at center, #8b5a3c 0%, #5A3319 70%, #1a0e07 100%)",
-];
+const slides = [carousel_1, carousel_2, carousel_3, carousel_4, carousel_5, carousel_6];
 
 export default function Hero() {
   const { t } = useLang();
@@ -30,14 +32,17 @@ export default function Hero() {
 
   return (
     <section id="hero" className="relative h-screen w-full overflow-hidden">
-      {slides.map((bg, i) => (
+      {slides.map((src, i) => (
         <motion.div
           key={i}
           initial={false}
           animate={{ opacity: i === index ? 1 : 0 }}
           transition={{ duration: 1.5 }}
-          className="absolute inset-0"
-          style={{ background: bg, transform: `translateY(${scrollY * 0.35}px) scale(${1 + scrollY * 0.0005})` }}
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage: `url(${src})`,
+            transform: `translateY(${scrollY * 0.35}px) scale(${1 + scrollY * 0.0005})`,
+          }}
         />
       ))}
       <div className="absolute inset-0 bg-black/30" />

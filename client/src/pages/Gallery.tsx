@@ -1,75 +1,81 @@
-import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
-import GalleryGrid from "@/components/GalleryGrid";
-import { useLang } from "@/context/LangContext";
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { X, Upload } from 'lucide-react'
+import SectionWrapper from '../components/SectionWrapper'
+import GalleryGrid from '../components/GalleryGrid'
+import { useLang } from '../context/LangContext'
 
 export default function Gallery() {
-  const { t } = useLang();
-  const [open, setOpen] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
-
-  useEffect(() => {
-    const on = () => setScrollY(window.scrollY);
-    window.addEventListener("scroll", on);
-    return () => window.removeEventListener("scroll", on);
-  }, []);
+  const { t } = useLang()
+  const [modal, setModal] = useState(false)
 
   return (
-    <section id="gallery" className="relative py-24 md:py-32 px-6 bg-[#FDF8F2] overflow-hidden">
-      <div
-        className="absolute inset-0 opacity-[0.04] pointer-events-none"
-        style={{
-          background: "radial-gradient(circle at 50% 50%, #5A3319 0%, transparent 70%)",
-          transform: `translateY(${scrollY * 0.05}px)`,
-        }}
-      />
-      <motion.div
-        initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }} transition={{ duration: 0.8 }}
-        className="text-center mb-16 relative"
-      >
-        <p className="text-xs uppercase tracking-[0.4em] text-[#E5C290] mb-3">{t.gallery.subtitle}</p>
-        <h2 className="font-serif text-5xl md:text-6xl text-[#5A3319]">{t.gallery.title}</h2>
-      </motion.div>
-
-      <div className="max-w-7xl mx-auto relative">
-        <GalleryGrid />
-        <div className="mt-12 text-center">
-          <button
-            onClick={() => setOpen(true)}
-            className="px-8 py-3 rounded-full border border-[#5A3319] text-[#5A3319] text-xs uppercase tracking-[0.25em] hover:bg-[#5A3319] hover:text-[#E5C290] transition-colors"
-          >
-            {t.gallery.submit}
-          </button>
+    <SectionWrapper id="gallery" className="section-pad bg-brand-cream-dark">
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-14">
+          <p className="eyebrow mb-4">{t('gallery.eyebrow')}</p>
+          <h2 className="font-serif font-light text-brand-brown mb-6"
+              style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)' }}>
+            {t('gallery.title')}
+          </h2>
+          <div className="gold-rule w-32 mx-auto" />
         </div>
+
+        <GalleryGrid onSubmitClick={() => setModal(true)} />
       </div>
 
+      {/* Submit modal */}
       <AnimatePresence>
-        {open && (
+        {modal && (
           <motion.div
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm flex items-center justify-center p-6"
-            onClick={() => setOpen(false)}
+            key="modal"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-brand-brown/70 backdrop-blur-sm flex items-center justify-center px-4"
+            onClick={() => setModal(false)}
           >
             <motion.div
-              initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9 }}
-              onClick={(e) => e.stopPropagation()}
-              className="bg-[#FDF8F2] rounded-3xl p-8 max-w-md w-full relative"
+              initial={{ scale: 0.92, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.92, y: 20 }}
+              className="bg-brand-cream rounded-2xl p-10 max-w-md w-full relative shadow-2xl"
+              onClick={e => e.stopPropagation()}
             >
-              <button onClick={() => setOpen(false)} className="absolute top-4 right-4 text-[#5A3319]" aria-label="Close">
-                <X className="w-5 h-5" />
+              <button
+                onClick={() => setModal(false)}
+                className="absolute top-5 right-5 text-brand-brown/40 hover:text-brand-brown transition-colors"
+              >
+                <X size={20} />
               </button>
-              <h3 className="font-serif text-2xl text-[#5A3319] mb-2">{t.gallery.modalTitle}</h3>
-              <p className="text-sm text-[#5A3319]/70 mb-6">{t.gallery.modalDesc}</p>
-              <input type="file" accept="image/*" multiple className="w-full text-sm text-[#5A3319] file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-[#5A3319] file:text-[#E5C290] file:cursor-pointer" />
-              <button onClick={() => setOpen(false)} className="mt-6 w-full py-3 rounded-full bg-[#5A3319] text-[#E5C290] text-xs uppercase tracking-[0.25em]">
-                {t.gallery.close}
+
+              <h3 className="font-serif text-2xl font-light text-brand-brown mb-2">
+                {t('gallery.modal.title')}
+              </h3>
+              <div className="gold-rule w-16 mb-4" />
+              <p className="font-sans text-sm text-brand-brown/60 mb-8 leading-relaxed">
+                {t('gallery.modal.desc')}
+              </p>
+
+              {/* Upload area */}
+              <div className="border-2 border-dashed border-brand-gold/40 rounded-xl p-10 flex flex-col items-center gap-3 cursor-pointer hover:border-brand-gold hover:bg-brand-gold/5 transition-all duration-300">
+                <Upload size={28} className="text-brand-gold-deep" />
+                <p className="font-sans text-sm text-brand-brown/60 text-center">
+                  {t('gallery.modal.btn')}
+                </p>
+              </div>
+
+              <button
+                onClick={() => setModal(false)}
+                className="mt-6 w-full py-3 bg-brand-brown text-brand-gold font-sans font-medium tracking-widest uppercase text-sm rounded-full hover:bg-brand-brown-dark transition-colors duration-300"
+              >
+                {t('gallery.modal.close')}
               </button>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
-    </section>
-  );
+    </SectionWrapper>
+  )
 }
