@@ -53,15 +53,14 @@ export default function GalleryGrid({
   useEffect(() => {
     mediaApi.list().then((res) => {
       if (res.data && res.data.length > 0) {
-        setPhotos(
-          res.data
-            .filter((m: any) => m.approved)
-            .map((m: any) => ({
-              id: m.id,
-              album: mapAlbum(m.album),
-              src: m.url,
-            }))
-        )
+        const apiPhotos: Photo[] = res.data
+          .filter((m: any) => m.approved)
+          .map((m: any) => ({
+            id: m.id,
+            album: mapAlbum(m.album),
+            src: m.url,
+          }))
+        setPhotos([...STATIC_PHOTOS, ...apiPhotos])
       }
     }).catch(() => {})
   }, [])
