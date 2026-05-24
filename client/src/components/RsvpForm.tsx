@@ -1,17 +1,39 @@
 import { useState, FormEvent } from "react";
 import { useLang } from "@/context/LangContext";
+import { rsvp as rsvpApi } from "@/lib/api";
 
 export default function RsvpForm() {
   const { t } = useLang();
   const [form, setForm] = useState({
     name: "", email: "", attending: "yes", meal: "beef", plusOne: "", diet: "",
   });
+  const [submitted, setSubmitted] = useState(false);
 
-  const onSubmit = (e: FormEvent) => {
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log("RSVP:", form);
-    alert("Merci! / Thank you!");
+    try {
+      await rsvpApi.submit({
+        full_name: form.name,
+        email: form.email,
+        attending: form.attending === "yes",
+        meal_preference: form.meal,
+        plus_one_name: form.plusOne || undefined,
+        dietary_notes: form.diet || undefined,
+      });
+      setSubmitted(true);
+    } catch (err) {
+      alert("Something went wrong. Please try again or use WhatsApp.");
+    }
   };
+
+  if (submitted) {
+    return (
+      <div className="text-center py-12">
+        <p className="font-serif text-2xl text-[#5A3319] mb-2">Thank you!</p>
+        <p className="text-sm text-[#5A3319]/60">Your RSVP has been received.</p>
+      </div>
+    );
+  }
 
   const waMsg = encodeURIComponent(`RSVP — ${form.name || "Guest"}: ${form.attending === "yes" ? "Attending" : "Not attending"}`);
   const waLink = `https://wa.me/237600000000?text=${waMsg}`;

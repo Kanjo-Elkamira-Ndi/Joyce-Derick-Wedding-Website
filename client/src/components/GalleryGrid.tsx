@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, ChevronLeft, ChevronRight, Camera } from 'lucide-react'
 import { useLang } from '../context/LangContext'
+import { media as mediaApi } from '@/lib/api'
 import {
   cover_image_1,
   cover_image_2,
@@ -14,24 +15,30 @@ import {
 type Album = 'all' | 'pre' | 'eng'
 
 interface Photo {
-  id: number
+  id: string
   album: 'pre' | 'eng'
   src: string
 }
 
-const images = [cover_image_1, cover_image_2, cover_image_3, cover_image_4, cover_image_5, cover_image_6]
+const staticImages = [cover_image_1, cover_image_2, cover_image_3, cover_image_4, cover_image_5, cover_image_6]
 
-const PHOTOS: Photo[] = [
-  { id: 1, album: 'pre', src: images[0] },
-  { id: 2, album: 'pre', src: images[1] },
-  { id: 3, album: 'eng', src: images[2] },
-  { id: 4, album: 'eng', src: images[3] },
-  { id: 5, album: 'pre', src: images[4] },
-  { id: 6, album: 'eng', src: images[5] },
-  { id: 7, album: 'pre', src: images[0] },
-  { id: 8, album: 'eng', src: images[1] },
-  { id: 9, album: 'pre', src: images[2] },
+const STATIC_PHOTOS: Photo[] = [
+  { id: 's1', album: 'pre', src: staticImages[0] },
+  { id: 's2', album: 'pre', src: staticImages[1] },
+  { id: 's3', album: 'eng', src: staticImages[2] },
+  { id: 's4', album: 'eng', src: staticImages[3] },
+  { id: 's5', album: 'pre', src: staticImages[4] },
+  { id: 's6', album: 'eng', src: staticImages[5] },
+  { id: 's7', album: 'pre', src: staticImages[0] },
+  { id: 's8', album: 'eng', src: staticImages[1] },
+  { id: 's9', album: 'pre', src: staticImages[2] },
 ]
+
+function mapAlbum(album: string): 'pre' | 'eng' {
+  if (album === 'pre-wedding') return 'pre'
+  if (album === 'engagement') return 'eng'
+  return 'pre'
+}
 
 export default function GalleryGrid({
   onSubmitClick,
@@ -39,10 +46,27 @@ export default function GalleryGrid({
   onSubmitClick: () => void
 }) {
   const { t } = useLang()
-  const [tab, setTab]       = useState<Album>('all')
-  const [light, setLight]   = useState<number | null>(null)
+  const [tab, setTab] = useState<Album>('all')
+  const [light, setLight] = useState<string | null>(null)
+  const [photos, setPhotos] = useState<Photo[]>(STATIC_PHOTOS)
 
-  const visible = PHOTOS.filter(p => tab === 'all' || p.album === tab)
+  useEffect(() => {
+    mediaApi.list().then((res) => {
+      if (res.data && res.data.length > 0) {
+        setPhotos(
+          res.data
+            .filter((m: any) => m.approved)
+            .map((m: any) => ({
+              id: m.id,
+              album: mapAlbum(m.album),
+              src: m.url,
+            }))
+        )
+      }
+    }).catch(() => {})
+  }, [])
+
+  const visible = photos.filter(p => tab === 'all' || p.album === tab)
 
   const prev = () => {
     if (light === null) return
@@ -141,7 +165,7 @@ export default function GalleryGrid({
               onClick={e => e.stopPropagation()}
             >
               <img
-                src={PHOTOS.find(p => p.id === light)?.src}
+                src={photos.find(p => p.id === light)?.src}
                 alt=""
                 className="w-full h-auto"
               />
