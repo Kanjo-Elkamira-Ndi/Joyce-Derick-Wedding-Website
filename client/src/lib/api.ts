@@ -102,6 +102,8 @@ export const media = {
     request<{ data: any[]; count: number }>("/media/admin"),
   delete: (id: string) =>
     request<{ message: string }>(`/media/admin/${id}`, { method: "DELETE" }),
+  approve: (id: string) =>
+    request<{ message: string; data: any }>(`/media/admin/${id}/approve`, { method: "PATCH" }),
   adminUpload: (file: File, album: string, caption?: string) => {
     const fd = new FormData()
     fd.append("file", file)

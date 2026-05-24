@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import { Upload, Trash2 } from "lucide-react"
+import { Check, Upload, Trash2 } from "lucide-react"
 import { media as mediaApi } from "@/lib/api"
 
 interface MediaItem {
@@ -33,6 +33,15 @@ export default function AdminGallery() {
       setItems((prev) => prev.filter((i) => i.id !== id))
     } catch {
       alert("Failed to delete")
+    }
+  }
+
+  const handleApprove = async (id: string) => {
+    try {
+      await mediaApi.approve(id)
+      setItems((prev) => prev.map((i) => (i.id === id ? { ...i, approved: true } : i)))
+    } catch {
+      alert("Failed to approve")
     }
   }
 
@@ -97,7 +106,25 @@ export default function AdminGallery() {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {items.map((img) => (
             <div key={img.id} className="bg-white rounded-xl overflow-hidden shadow-sm group relative">
-              <img src={img.url} alt="" className="w-full h-40 object-cover" />
+              <div className="relative">
+                <img src={img.url} alt="" className="w-full h-40 object-cover" />
+                {!img.approved && (
+                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button
+                      onClick={() => handleApprove(img.id)}
+                      className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition-colors"
+                      title="Approve"
+                    >
+                      <Check size={20} />
+                    </button>
+                  </div>
+                )}
+                {img.approved && (
+                  <span className="absolute top-2 right-2 bg-green-500 text-white text-[10px] px-2 py-0.5 rounded-full flex items-center gap-1">
+                    <Check size={10} /> Approved
+                  </span>
+                )}
+              </div>
               <div className="p-3 flex items-center justify-between">
                 <span className="text-xs text-[#5A3319]/60">{img.album}</span>
                 <button
