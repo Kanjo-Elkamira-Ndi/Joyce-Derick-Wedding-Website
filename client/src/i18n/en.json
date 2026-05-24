@@ -27,7 +27,7 @@
   "event": {
     "title": "The Celebration",
     "subtitle": "Join us as we say I do",
-    "ceremony": { "label": "Ceremony", "venue": "Cathédrale Notre-Dame des Victoires", "address": "Centre-ville, Yaoundé", "time": "11:00 AM", "map": "View on Maps" },
+    "ceremony": { "label": "Ceremony", "venue": "Court - Bamenda 2 Council Old Church Traditional at Metas Beside Radio Hot Coco", "address": "Centre-ville, Yaoundé", "time": "11:00 AM", "map": "View on Maps" },
     "reception": { "label": "Reception", "venue": "Hilton Yaoundé Ballroom", "address": "Boulevard du 20 Mai, Yaoundé", "time": "5:00 PM", "map": "View on Maps" },
     "dressCode": "Dress Code",
     "brown": "Chocolate Brown",
