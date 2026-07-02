@@ -1,5 +1,6 @@
 {
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "https://joyce-derick-api.onrender.com/api/$1" }
+    { "source": "/api/(.*)", "destination": "https://joyce-derick-api.onrender.com/api/$1" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
