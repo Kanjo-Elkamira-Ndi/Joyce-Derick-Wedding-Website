@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "https://joyce-derick-api.onrender.com/api/$1" }
+  ]
+}
