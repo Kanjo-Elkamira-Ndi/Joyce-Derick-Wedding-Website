@@ -62,15 +62,7 @@ export async function uploadMedia(req: Request, res: Response): Promise<void> {
       return
     }
 
-    const file = req.file as Express.Multer.File & {
-      path: string
-      filename: string
-      // multer-storage-cloudinary attaches these:
-      cloudinary?: { secure_url: string; public_id: string; resource_type: string }
-    }
-
-    // multer-storage-cloudinary puts cloudinary result on req.file
-    const cloudinaryFile = file as any
+    const cloudinaryFile = req.file as any
     const url         = cloudinaryFile.path || cloudinaryFile.secure_url
     const public_id   = cloudinaryFile.filename || cloudinaryFile.public_id
     const resource_type: ResourceType =
