@@ -9,7 +9,7 @@
   },
   "hero": {
     "names": "Joyce & Derick",
-    "date": "Samedi 4 Juillet 2026 · Bamenda, Cameroun",
+    "date": "Samedi 4 Juin 2026 · Bamenda, Cameroun",
     "tagline": "Deux cœurs, un seul chemin",
     "scroll": "Défiler",
     "countdown": { "days": "Jours", "hours": "Heures", "minutes": "Minutes", "seconds": "Secondes" }
@@ -18,17 +18,17 @@
     "title": "Notre Histoire",
     "subtitle": "Un amour écrit dans les instants",
     "items": [
-      { "date": "Mars 2019", "title": "Première rencontre", "desc": "Nos chemins se sont croisés à l'anniversaire d'un ami à Douala — une conversation jusqu'à l'aube." },
-      { "date": "Août 2019", "title": "Premier rendez-vous", "desc": "Du suya, des rires et une longue promenade. Nous savions que quelque chose commençait." },
-      { "date": "Février 2024", "title": "La demande", "desc": "Un soir tranquille à Kribi, l'océan comme témoin, il a posé la question." },
-      { "date": "Juin 2026", "title": "Séance de fiançailles", "desc": "Une célébration de nous — capturée dans la lumière dorée des collines de Bamenda." }
+      { "date": "", "title": "Notre rencontre", "desc": "Nos regards se sont croisés entre les bancs un dimanche matin — un signe discret, un cantique partagé, et notre histoire a commencé dans la maison du Seigneur." },
+      { "date": "28 Juin 2025", "title": "Premier rendez-vous", "desc": "Du suya, des rires et une longue promenade. Nous savions que quelque chose commençait." },
+      { "date": "30 Mars 2026", "title": "La demande", "desc": "À genoux dans un coin tranquille de Yaoundé, une bague et une voix tremblante — elle a dit oui pour toujours." }
     ]
   },
   "event": {
     "title": "La Célébration",
     "subtitle": "Rejoignez-nous pour nos voeux",
-    "ceremony": { "label": "Cérémonie", "venue": "Cathédrale Notre-Dame des Victoires", "address": "Centre-ville, Yaoundé", "time": "11h00", "map": "Voir sur la carte" },
-    "reception": { "label": "Réception", "venue": "Salle de bal Hilton Yaoundé", "address": "Boulevard du 20 Mai, Yaoundé", "time": "17h00", "map": "Voir sur la carte" },
+    "traditional": { "label": "Mariage Traditionnel", "date": "Samedi 4 Juin 2026", "venue": "Ade Metas à côté de Radio Hot Coco", "address": "Bamenda", "time": "11h00" },
+    "reception": { "label": "Réception", "venue": "La Concession Familiale", "address": "Bamenda", "time": "14h00" },
+    "court": { "label": "Mariage Civil", "date": "Vendredi 12 Juin 2026", "venue": "Tribunal de Yaoundé", "address": "Yaoundé", "time": "09h00" },
     "dressCode": "Code vestimentaire",
     "brown": "Brun Chocolat",
     "gold": "Or Champagne"
