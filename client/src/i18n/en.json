@@ -33,6 +33,12 @@
     "brown": "Chocolate Brown",
     "gold": "Champagne Gold"
   },
+  "meet": {
+    "groomEyebrow": "Meet the Groom",
+    "brideEyebrow": "Meet the Bride",
+    "groom": { "name": "Derick", "desc": "Steady as the hills that cradle Bamenda, gentle as the morning light. A builder of dreams and a keeper of promises — his hand in mine is the surest thing I know." },
+    "bride": { "name": "Joyce", "desc": "She walks into a room and the world tilts toward her. Grace in every step, warmth in every word — being loved by her is like standing in perpetual sunshine." }
+  },
   "gallery": {
     "eyebrow": "A visual journey through our love story",
     "title": "Moments",

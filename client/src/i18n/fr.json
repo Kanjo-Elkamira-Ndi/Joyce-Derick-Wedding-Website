@@ -33,6 +33,12 @@
     "brown": "Brun Chocolat",
     "gold": "Or Champagne"
   },
+  "meet": {
+    "groomEyebrow": "Rencontrez le Marié",
+    "brideEyebrow": "Rencontrez la Mariée",
+    "groom": { "name": "Derick", "desc": "Solide comme les collines qui bercent Bamenda, doux comme la lumière du matin. Un bâtisseur de rêves et un gardien de promesses — sa main dans la mienne est la chose la plus sûre que je connaisse." },
+    "bride": { "name": "Joyce", "desc": "Elle entre dans une pièce et le monde penche vers elle. La grâce à chaque pas, la chaleur dans chaque mot — être aimé par elle, c'est comme se tenir sous un soleil éternel." }
+  },
   "gallery": {
     "eyebrow": "Un voyage visuel à travers notre histoire d'amour",
     "title": "Instants",
