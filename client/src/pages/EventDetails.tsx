@@ -4,7 +4,7 @@ import { useLang } from "@/context/LangContext";
 
 export default function EventDetails() {
   const { t } = useLang();
-  const events = [t.event.ceremony, t.event.reception];
+  const events = [t.event.traditional, t.event.reception, t.event.court];
 
   return (
     <section id="event" className="py-24 md:py-32 px-6 bg-[#F5ECD8]/60">
@@ -31,13 +31,6 @@ export default function EventDetails() {
               <div className="flex items-center gap-2"><MapPin className="w-4 h-4 text-[#E5C290]" />{e.address}</div>
               <div className="flex items-center gap-2"><Clock className="w-4 h-4 text-[#E5C290]" />{e.time}</div>
             </div>
-            <a
-              href={`https://maps.google.com/?q=${encodeURIComponent(e.venue + " " + e.address)}`}
-              target="_blank" rel="noopener noreferrer"
-              className="inline-block px-6 py-3 rounded-full border border-[#5A3319] text-[#5A3319] text-xs uppercase tracking-[0.2em] hover:bg-[#5A3319] hover:text-[#E5C290] transition-colors"
-            >
-              {e.map}
-            </a>
           </motion.div>
         ))}
       </div>

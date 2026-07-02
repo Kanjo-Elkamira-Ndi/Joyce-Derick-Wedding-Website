@@ -9,7 +9,7 @@
   },
   "hero": {
     "names": "Joyce & Derick",
-    "date": "Saturday July 4th, 2026 · Bamenda, Cameroon",
+    "date": "Saturday June 4th, 2026 · Bamenda, Cameroon",
     "tagline": "Two hearts, one journey",
     "scroll": "Scroll",
     "countdown": { "days": "Days", "hours": "Hours", "minutes": "Minutes", "seconds": "Seconds" }
@@ -18,20 +18,26 @@
     "title": "Our Story",
     "subtitle": "A love written in moments",
     "items": [
-      { "date": "March 2019", "title": "First Met", "desc": "Our paths crossed at a friend's birthday in Douala — one conversation lasted until sunrise." },
-      { "date": "August 2019", "title": "First Date", "desc": "Suya, laughter, and a long walk by the boulevard. We knew something was beginning." },
-      { "date": "February 2024", "title": "The Proposal", "desc": "On a quiet evening in Kribi, with the ocean as our witness, he asked the question." },
-      { "date": "June 2026", "title": "Engagement Shoot", "desc": "A celebration of us — captured in golden light among the hills of Bamenda." }
+      { "date": "", "title": "Where We Met", "desc": "Our gazes locked across the pews one Sunday morning — a quiet nod, a shared hymn, and a love story began in the house of the Lord." },
+      { "date": "June 28, 2025", "title": "First Date", "desc": "Suya, laughter, and a long walk by the boulevard. We knew something was beginning." },
+      { "date": "March 30, 2026", "title": "The Proposal", "desc": "On bended knee in a quiet corner of Yaounde, with a ring and a trembling voice, she said yes to forever." }
     ]
   },
   "event": {
     "title": "The Celebration",
     "subtitle": "Join us as we say I do",
-    "ceremony": { "label": "Ceremony", "venue": "Court - Bamenda 2 Council Old Church Traditional at Metas Beside Radio Hot Coco", "address": "Centre-ville, Yaoundé", "time": "11:00 AM", "map": "View on Maps" },
-    "reception": { "label": "Reception", "venue": "Hilton Yaoundé Ballroom", "address": "Boulevard du 20 Mai, Yaoundé", "time": "5:00 PM", "map": "View on Maps" },
+    "traditional": { "label": "Traditional Wedding", "date": "Saturday, June 4th, 2026", "venue": "Ade Metas beside Radio Hot Coco", "address": "Bamenda", "time": "11:00 AM" },
+    "reception": { "label": "Reception", "venue": "The Family Compound", "address": "Bamenda", "time": "2:00 PM" },
+    "court": { "label": "Court Wedding", "date": "Friday, June 12th, 2026", "venue": "Yaounde Court House", "address": "Yaounde", "time": "9:00 AM" },
     "dressCode": "Dress Code",
     "brown": "Chocolate Brown",
     "gold": "Champagne Gold"
+  },
+  "meet": {
+    "groomEyebrow": "Meet the Groom",
+    "brideEyebrow": "Meet the Bride",
+    "groom": { "name": "Derick", "desc": "Steady as the hills that cradle Bamenda, gentle as the morning light. A builder of dreams and a keeper of promises — his hand in mine is the surest thing I know." },
+    "bride": { "name": "Joyce", "desc": "She walks into a room and the world tilts toward her. Grace in every step, warmth in every word — being loved by her is like standing in perpetual sunshine." }
   },
   "gallery": {
     "eyebrow": "A visual journey through our love story",

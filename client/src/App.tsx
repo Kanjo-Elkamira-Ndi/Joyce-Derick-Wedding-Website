@@ -5,6 +5,7 @@ import Footer from "@/components/Footer"
 import Hero from "@/pages/Hero"
 import OurStory from "@/pages/OurStory"
 import EventDetails from "@/pages/EventDetails"
+import Meet from "@/pages/Meet"
 import Gallery from "@/pages/Gallery"
 import Rsvp from "@/pages/Rsvp"
 import Guestbook from "@/pages/Guestbook"
@@ -18,6 +19,7 @@ function WeddingSite() {
         <Hero />
         <OurStory />
         <EventDetails />
+        <Meet />
         <Gallery />
         <Rsvp />
         <Guestbook />
