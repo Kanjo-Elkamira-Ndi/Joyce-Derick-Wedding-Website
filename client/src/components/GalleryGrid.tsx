@@ -23,15 +23,15 @@ interface Photo {
 const staticImages = [cover_image_1, cover_image_2, cover_image_3, cover_image_4, cover_image_5, cover_image_6]
 
 const STATIC_PHOTOS: Photo[] = [
-  { id: 's1', album: 'pre', src: staticImages[0] },
-  { id: 's2', album: 'pre', src: staticImages[1] },
+  { id: 's1', album: 'eng', src: staticImages[0] },
+  { id: 's2', album: 'eng', src: staticImages[1] },
   { id: 's3', album: 'eng', src: staticImages[2] },
   { id: 's4', album: 'eng', src: staticImages[3] },
-  { id: 's5', album: 'pre', src: staticImages[4] },
+  { id: 's5', album: 'eng', src: staticImages[4] },
   { id: 's6', album: 'eng', src: staticImages[5] },
-  { id: 's7', album: 'pre', src: staticImages[0] },
+  { id: 's7', album: 'eng', src: staticImages[0] },
   { id: 's8', album: 'eng', src: staticImages[1] },
-  { id: 's9', album: 'pre', src: staticImages[2] },
+  { id: 's9', album: 'eng', src: staticImages[2] },
 ]
 
 function mapAlbum(album: string): 'pre' | 'eng' {
